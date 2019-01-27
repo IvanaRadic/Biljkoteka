@@ -75,7 +75,6 @@ namespace Biljke
 
             var con = DB.GetSqlkonekcija();
 
-
             if (nazivbox1.Text == "Unesi naziv biljke")
             {
                 BiljkeUnesi biljkaunos = new BiljkeUnesi();
@@ -83,7 +82,7 @@ namespace Biljke
             }
 
             else
-            {
+            {  con.Open(); 
                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM unos WHERE naziv ='" + nazivbox1.Text + "'", con);
                DataTable dt = new DataTable();
 
@@ -115,7 +114,7 @@ namespace Biljke
                MemoryStream mem = new MemoryStream(data);
                slikabox.Image = Image.FromStream(mem);
 
-               con.Open();
+               con.Close();
             }
 
             else
@@ -131,6 +130,7 @@ namespace Biljke
         private void AllButton_Click(object sender, EventArgs e) 
         {
             var con = DB.GetSqlkonekcija();
+            con.Open(); 
             SqlCommand cmd = new SqlCommand("select naziv, korisnik, image from unos;", con);
 
             try
@@ -153,6 +153,7 @@ namespace Biljke
                 source.DataSource = dba;
                 dataGridView1.DataSource = source;
                 sda.Update(dba);
+                con.Close(); 
             }
             catch (Exception ex)
             {

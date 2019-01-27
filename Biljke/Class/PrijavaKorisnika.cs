@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Biljke
 {
-    class PrijavaKorisnika
+    static class PrijavaKorisnika
     {
         public static string imePrijavljenog;
         public static string ime;

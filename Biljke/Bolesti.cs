@@ -99,6 +99,7 @@ namespace Biljke
                 source.DataSource = dba;
                 dataGridView1.DataSource = source;
                 sda.Update(dba);
+                con.Close(); 
             }
             catch (Exception ex)
             {

@@ -71,8 +71,6 @@ namespace Biljke
         private void Obrisi_profil_Click(object sender, EventArgs e)
         {
             var con = DB.GetSqlkonekcija();
-
-            con.Open();
             if (odabranabiljka.Text == "____________")
             {
 
@@ -82,7 +80,7 @@ namespace Biljke
             }
             else
             {
-
+                con.Open(); 
                 SqlDataAdapter sda = new SqlDataAdapter("DELETE FROM unos WHERE naziv ='" + odabranabiljka.Text + "';", con);
                 sda.SelectCommand.ExecuteNonQuery();
 
@@ -109,6 +107,7 @@ namespace Biljke
             label1.Text = PrijavaKorisnika.ime;
 
             var con = DB.GetSqlkonekcija();
+            con.Open(); 
             SqlCommand cmd = new SqlCommand("SELECT naziv, Image FROM unos WHERE korisnik='" + PrijavaKorisnika.imePrijavljenog + "'", con);
 
             try
@@ -132,6 +131,7 @@ namespace Biljke
                 source.DataSource = dba;
                 dataGridView1.DataSource = source;
                 sda.Update(dba);
+                con.Close(); 
 
             }
             catch (Exception ex)
@@ -154,11 +154,9 @@ namespace Biljke
             }
             else
             { 
-            
+                con.Open(); 
                 SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM unos WHERE naziv ='" + odabranabiljka.Text + "'", con);
                 DataTable dt = new DataTable();
-
-
                 sda.Fill(dt);
 
                 opisbox.Text = dt.Rows[0][1].ToString();
@@ -185,7 +183,7 @@ namespace Biljke
                 MemoryStream mem = new MemoryStream(data);
                 slikabox.Image = Image.FromStream(mem);
                 
-                con.Open();
+                con.Close();
          
         }
         }
@@ -205,7 +203,7 @@ namespace Biljke
             }
         }
 
-        private void Profil_Load(object sender, EventArgs e) //?
+        private void Profil_Load(object sender, EventArgs e)
         {
             
         }
